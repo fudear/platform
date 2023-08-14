@@ -1,8 +1,65 @@
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { FC } from "react";
+import { Alchemy, AssetTransfersCategory, Network } from "alchemy-sdk";
+import { FC, useEffect, useState } from "react";
 
-const Home: FC<{}> = () => {
-  return <Typography variant="h3">CleanHelp</Typography>;
+const Home: FC<> = () => {
+  const [txHistory, setTxHistory] = useState<
+    {
+      uniqueId: string;
+      asset: string | null;
+      category: string;
+      value: number | null;
+    }[]
+  >([]);
+
+  const address = "0x59ec567e868b06b132f6d31f117795822beaa147";
+  const config = {
+    apiKey: "28V94dZPmWS1rhwqI8ULPt2SELEH7K8x",
+    network: Network.MATIC_MAINNET,
+  };
+
+  const alchemy = new Alchemy(config);
+
+  useEffect(() => {
+    alchemy.core
+      .getAssetTransfers({
+        fromBlock: "0x0",
+        toAddress: address,
+        category: [
+          AssetTransfersCategory.INTERNAL,
+          AssetTransfersCategory.ERC20,
+          AssetTransfersCategory.ERC1155,
+        ],
+        excludeZeroValue: true,
+      })
+      .then((res) => {
+        console.log(res.transfers);
+        setTxHistory(
+          res.transfers.filter((tx) =>
+            ["USDC", "USDT", "MATIC"].includes(tx.asset || "")
+          )
+        );
+      });
+  }, []);
+
+  return (
+    <Typography variant="h3">
+      <Stack gap={3} alignItems="center" marginY={2}>
+        {txHistory.map((tx) => (
+          <Card key={tx.uniqueId} variant="outlined" sx={{ width: 250 }}>
+            <CardContent>
+              <Typography>Asset: {tx.asset}</Typography>
+              <Typography>Value: {tx.value}</Typography>
+              <Typography>Category: {tx.category}</Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+    </Typography>
+  );
 };
 
 export default Home;
