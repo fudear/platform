@@ -1,8 +1,19 @@
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
 
+
+import Test from '../components/Test'
+
 const Home: FC<{}> = () => {
-  return <Typography variant="h3">CleanHelp</Typography>;
+
+  
+  return (
+  <div>  
+    <Typography variant="h3">CleanHelp
+    </Typography>
+    <Test/>
+  </div>
+  );
 };
 
 export default Home;
