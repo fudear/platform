@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { Container } from '@mui/material';
+import { FC } from 'react';
 
-const Layout: FC<{ Component: any }> = ({ Component }) => {
-  return <Component />;
+const Layout: FC<{ children: any }> = ({ children }) => {
+  return <Container maxWidth="md">{children}</Container>;
 };
 
 export default Layout;
