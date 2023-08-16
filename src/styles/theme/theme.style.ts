@@ -8,8 +8,9 @@ const theme: ThemeOptions = {
       light: '#B2CEFB',
     },
     secondary: {
-      main: '#808080',
-      light: '#F6F6F6',
+      main: '#3E3E3E',
+      dark: '#0D0D0D',
+      light: '#FFFFFF',
     },
     success: {
       main: '#008053',
@@ -30,43 +31,50 @@ const theme: ThemeOptions = {
       fontSize: '64px',
       lineHeight: '68px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     displaySmall: {
       fontSize: '48px',
       lineHeight: '52px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h1: {
       fontSize: '44px',
       lineHeight: '52px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h2: {
       fontSize: '36px',
       lineHeight: '44px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h3: {
       fontSize: '32px',
       lineHeight: '40px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h4: {
       fontSize: '28px',
       lineHeight: '36px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h5: {
       fontSize: '24px',
       lineHeight: '32px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
     h6: {
       fontSize: '20px',
       lineHeight: '28px',
       tracking: '-2%',
+      fontFamily: 'Rubik',
     },
-    fontFamily: 'Rubik',
   },
   spacing: [
     0,
@@ -131,7 +139,7 @@ const theme: ThemeOptions = {
   ] as Shadows,
   // Set all buttons config here
   components: {
-    MuiButton: {}
+    MuiButton: {},
   },
 };
 

@@ -1,13 +1,13 @@
-import useAlchemyTransactionsHistory from "@/hooks/useAlchemy.hook";
-import { TransactionType } from "@/models/transaction.model";
-import { incomingTransactionsState } from "@/states/incoming-transactions.atom";
-import { outgoingTransactionsState } from "@/states/outgoing-transactions.atom";
-import createEmotionCache from "@/styles/createEmotionCache";
-import theme from "@/styles/theme/theme.style";
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { Suspense, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import useAlchemyTransactionsHistory from '@/hooks/useAlchemy.hook';
+import { TransactionType } from '@/models/transaction.model';
+import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
+import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
+import createEmotionCache from '@/styles/createEmotionCache';
+import theme from '@/styles/theme/theme.style';
+import { CacheProvider, EmotionCache } from '@emotion/react';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { Suspense, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 
 interface RootProps {
   Component: any;
@@ -47,9 +47,7 @@ const Root: React.FC<RootProps> = ({
     <>
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={createTheme(theme)}>
-          <CssBaseline enableColorScheme />
-
-          <Suspense fallback={"Loading..."}>
+          <Suspense fallback={'Loading...'}>
             <Component {...pageProps} />
           </Suspense>
         </ThemeProvider>

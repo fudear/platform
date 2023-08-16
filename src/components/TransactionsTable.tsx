@@ -1,12 +1,17 @@
 import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
 import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
+import {
+  TableCell,
+  TableRow,
+  Typography,
+  styled,
+  tableCellClasses,
+} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { Network } from 'alchemy-sdk';
 import { useRecoilState } from 'recoil';
 
@@ -24,27 +29,29 @@ const TransactionsTable: React.FC<TransactionsTableProps> = () => {
   return (
     <>
       <TableContainer component={Paper}>
-        <h2>Incoming Transactions</h2>
+        <Typography variant="h2" p="2rem" textAlign="center">
+          Incoming Transactions
+        </Typography>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Token</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Transaction Hash</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell>Token</StyledTableCell>
+              <StyledTableCell>Amount</StyledTableCell>
+              <StyledTableCell>Address</StyledTableCell>
+              <StyledTableCell>Transaction Hash</StyledTableCell>
+              <StyledTableCell>Category</StyledTableCell>
+              <StyledTableCell>Action</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
             {incomingTxState.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.asset || ''}</TableCell>
-                <TableCell>{row.value || 0}</TableCell>
-                <TableCell>{row.from}</TableCell>
-                <TableCell>{row.hash || ''}</TableCell>
-                <TableCell>{row.category}</TableCell>
-                <TableCell>
+              <StyledTableRow key={index}>
+                <StyledTableCell>{row.asset || ''}</StyledTableCell>
+                <StyledTableCell>${row.value || 0}</StyledTableCell>
+                <StyledTableCell>{row.from}</StyledTableCell>
+                <StyledTableCell>{row.hash || ''}</StyledTableCell>
+                <StyledTableCell>{row.category}</StyledTableCell>
+                <StyledTableCell>
                   {row.network === Network.MATIC_MAINNET ? (
                     <a
                       href={`https://polygonscan.com/tx/${row.hash}`}
@@ -62,34 +69,38 @@ const TransactionsTable: React.FC<TransactionsTableProps> = () => {
                       View more TX details
                     </a>
                   )}
-                </TableCell>
-              </TableRow>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TableContainer component={Paper}>
-        <h2>Outgoing Transactions</h2>
+        <Typography variant="h2" p="2rem" textAlign="center">
+          Outgoing Transactions
+        </Typography>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Token</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Transaction Hash</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell>Token</StyledTableCell>
+              <StyledTableCell>Amount</StyledTableCell>
+              <StyledTableCell>Address</StyledTableCell>
+              <StyledTableCell>Transaction Hash</StyledTableCell>
+              <StyledTableCell>Category</StyledTableCell>
+              <StyledTableCell>Action</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
             {outgoingTxState.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.asset || ''}</TableCell>
-                <TableCell>{row.value || 0}</TableCell>
-                <TableCell>{row.from}</TableCell>
-                <TableCell>{row.hash || ''}</TableCell>
-                <TableCell>{row.category}</TableCell>
-                <TableCell>
+              <StyledTableRow key={index}>
+                <StyledTableCell>{row.asset || ''}</StyledTableCell>
+                <StyledTableCell>
+                  <div className="flex">${row.value || 0}</div>
+                </StyledTableCell>
+                <StyledTableCell>{row.from}</StyledTableCell>
+                <StyledTableCell>{row.hash || ''}</StyledTableCell>
+                <StyledTableCell>{row.category}</StyledTableCell>
+                <StyledTableCell>
                   {row.network === Network.MATIC_MAINNET ? (
                     <a
                       href={`https://polygonscan.com/tx/${row.hash}`}
@@ -107,8 +118,8 @@ const TransactionsTable: React.FC<TransactionsTableProps> = () => {
                       View more TX details
                     </a>
                   )}
-                </TableCell>
-              </TableRow>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>
@@ -116,5 +127,28 @@ const TransactionsTable: React.FC<TransactionsTableProps> = () => {
     </>
   );
 };
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.secondary.main,
+    fontSize: theme.typography.h4.fontSize,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.secondary.main,
+    fontSize: theme.typography.h6.fontSize,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 export default TransactionsTable;
