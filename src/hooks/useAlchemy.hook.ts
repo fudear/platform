@@ -6,32 +6,72 @@ const useAlchemyTransactionsHistory = (
   setTxHistory: SetterOrUpdater<CustomTransaction[]>,
   transactionType: TransactionType
 ) => {
-  const address = "0x59ec567e868b06b132f6d31f117795822beaa147";
-  const config = {
+  const polygonAddress1 = "0x5D039073fC3DD3d9c7Dbc9eC3409bA6957786Bf4";
+  const polygonAddress2 = "0x59ec567e868b06b132f6d31f117795822beaa147";
+  const polygonConfig = {
     apiKey: "28V94dZPmWS1rhwqI8ULPt2SELEH7K8x",
     network: Network.MATIC_MAINNET,
   };
 
-  const alchemy = new Alchemy(config);
+  const polygonAlchemy = new Alchemy(polygonConfig);
 
-  return () =>
-    alchemy.core
-      .getAssetTransfers({
-        toAddress:
-          transactionType === TransactionType.Incoming ? address : undefined,
-        fromAddress:
-          transactionType === TransactionType.Outgoing ? address : undefined,
-        fromBlock: "0x0",
-        category: [AssetTransfersCategory.ERC20],
-        excludeZeroValue: true,
-      })
-      .then((res) => {
-        setTxHistory(
-          res.transfers.filter((tx) =>
-            ["USDC", "USDT", "MATIC"].includes(tx.asset || "")
-          )
-        );
-      });
+  const etehereumAddress = "0xe576d24c6AA0E6A2cb3f30A5C18A636bba54FfaE";
+  const etehereumConfig = {
+    apiKey: "28V94dZPmWS1rhwqI8ULPt2SELEH7K8x",
+    network: Network.ETH_MAINNET,
+  };
+
+  const etehereumAlchemy = new Alchemy(etehereumConfig);
+
+  return () => {
+    getAssetTransfers(
+      setTxHistory,
+      transactionType,
+      polygonAlchemy,
+      polygonAddress1
+    );
+
+    getAssetTransfers(
+      setTxHistory,
+      transactionType,
+      polygonAlchemy,
+      polygonAddress2
+    );
+
+    getAssetTransfers(
+      setTxHistory,
+      transactionType,
+      etehereumAlchemy,
+      etehereumAddress
+    );
+  };
+};
+
+const getAssetTransfers = (
+  setTxHistory: SetterOrUpdater<CustomTransaction[]>,
+  transactionType: TransactionType,
+  alchemyInstance: Alchemy,
+  address: string
+) => {
+  alchemyInstance.core
+    .getAssetTransfers({
+      toAddress:
+        transactionType === TransactionType.Incoming ? address : undefined,
+      fromAddress:
+        transactionType === TransactionType.Outgoing ? address : undefined,
+      fromBlock: "0x0",
+      category: [AssetTransfersCategory.ERC20],
+      excludeZeroValue: true,
+    })
+    .then((res) => {
+      console.log(res.transfers);
+      setTxHistory((current) => [
+        ...current,
+        ...res.transfers.filter((tx) =>
+          ["USDC", "USDT", "MATIC"].includes(tx.asset || "")
+        ),
+      ]);
+    });
 };
 
 export default useAlchemyTransactionsHistory;
