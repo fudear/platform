@@ -3,6 +3,7 @@ import theme from "@/styles/theme/theme.style";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { Suspense } from "react";
+import Header from "./Header";
 
 interface RootProps {
   Component: any;
@@ -20,6 +21,8 @@ const Root: React.FC<RootProps> = ({
 }) => {
   return (
     <>
+      <Header />
+
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={createTheme(theme)}>
           <CssBaseline enableColorScheme />
