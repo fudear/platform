@@ -1,8 +1,9 @@
+import Home from "@/components/Home";
 import TransactionHistory from "@/components/TransactionHistory";
 import { FC } from "react";
 
-const Home: FC<{}> = () => {
-  return <></>;
+const HomePage: FC<{}> = () => {
+  return <Home />;
 };
 
-export default Home;
+export default HomePage;
