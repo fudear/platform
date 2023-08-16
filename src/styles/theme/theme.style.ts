@@ -3,7 +3,6 @@ import '@mui/material/Typography';
 
 const theme: ThemeOptions = {
   palette: {
-<<<<<<< HEAD
     primary: {
       main: '#1660D6',
       light: '#B2CEFB',
@@ -133,9 +132,6 @@ const theme: ThemeOptions = {
   // Set all buttons config here
   components: {
     MuiButton: {},
-=======
-    mode: "light",
->>>>>>> main
   },
 };
 

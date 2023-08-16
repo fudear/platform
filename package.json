@@ -15,11 +15,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
-<<<<<<< HEAD
     "@mui/material": "^5.14.5",
-=======
-    "@mui/material": "^5.14.4",
->>>>>>> main
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
