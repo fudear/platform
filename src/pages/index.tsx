@@ -1,60 +1,67 @@
+import useAlchemyTransactionsHistory from "@/hooks/useAlchemy.hook";
+import { TransactionType } from "@/models/transaction.model";
+import { incomingTransactionsState } from "@/states/incoming-transactions.atom";
+import { outgoingTransactionsState } from "@/states/outgoing-transactions.atom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Alchemy, AssetTransfersCategory, Network } from "alchemy-sdk";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
+import { useRecoilState } from "recoil";
 
 const Home: FC<{}> = () => {
-  const [txHistory, setTxHistory] = useState<
-    {
-      uniqueId: string;
-      asset: string | null;
-      category: string;
-      value: number | null;
-      from: string;
-    }[]
-  >([]);
+  const [incomingTxState, setIncomingTxState] = useRecoilState(
+    incomingTransactionsState
+  );
+  const [outgoingTxState, setOutgoingTxState] = useRecoilState(
+    outgoingTransactionsState
+  );
 
-  const address = "0x5D039073fC3DD3d9c7Dbc9eC3409bA6957786Bf4";
-  const config = {
-    apiKey: "28V94dZPmWS1rhwqI8ULPt2SELEH7K8x",
-    network: Network.MATIC_MAINNET,
-  };
-
-  const alchemy = new Alchemy(config);
+  const outgoingTxFn = useAlchemyTransactionsHistory(
+    setOutgoingTxState,
+    TransactionType.Outgoing
+  );
+  const incomingTxFn = useAlchemyTransactionsHistory(
+    setIncomingTxState,
+    TransactionType.Incoming
+  );
 
   useEffect(() => {
-    alchemy.core
-      .getAssetTransfers({
-        fromBlock: "0x0",
-        toAddress: address,
-        category: [AssetTransfersCategory.ERC20],
-        excludeZeroValue: true,
-      })
-      .then((res) => {
-        console.log(res.transfers);
-        setTxHistory(
-          res.transfers.filter((tx) =>
-            ["USDC", "USDT", "MATIC"].includes(tx.asset || "")
-          )
-        );
-      });
+    incomingTxFn();
+    outgoingTxFn();
   }, []);
 
   return (
     <Typography variant="h3">
-      <Stack gap={3} alignItems="center" marginY={2}>
-        {txHistory.map((tx) => (
-          <Card key={tx.uniqueId} variant="outlined" sx={{ width: 450 }}>
-            <CardContent>
-              <Typography>Asset: {tx.asset}</Typography>
-              <Typography>Value: {tx.value}</Typography>
-              <Typography>Category: {tx.category}</Typography>
-              <Typography>From: {tx.from}</Typography>
-            </CardContent>
-          </Card>
-        ))}
+      <Stack direction="row" justifyContent="space-evenly">
+        <Stack gap={3} alignItems="center" marginY={2}>
+          <Typography variant="h2">Incoming</Typography>
+          {incomingTxState.map((tx) => (
+            <Card key={tx.uniqueId} variant="outlined" sx={{ width: 450 }}>
+              <CardContent>
+                <Typography>Asset: {tx.asset}</Typography>
+                <Typography>Value: {tx.value}</Typography>
+                <Typography>Category: {tx.category}</Typography>
+                <Typography>From: {tx.from}</Typography>
+                <Typography>To: {tx.to}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+        <Stack gap={3} alignItems="center" marginY={2}>
+          <Typography variant="h2">Outgoing</Typography>
+          {outgoingTxState.map((tx) => (
+            <Card key={tx.uniqueId} variant="outlined" sx={{ width: 450 }}>
+              <CardContent>
+                <Typography>Asset: {tx.asset}</Typography>
+                <Typography>Value: {tx.value}</Typography>
+                <Typography>Category: {tx.category}</Typography>
+                <Typography>From: {tx.from}</Typography>
+                <Typography>To: {tx.to}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
       </Stack>
     </Typography>
   );
