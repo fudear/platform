@@ -1,11 +1,11 @@
-import Root from "@/components/layout/Root";
-import type { AppProps } from "next/app";
-import Head from "next/head";
-import { RecoilRoot } from "recoil";
+import Root from '@/components/layout/Root';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { RecoilRoot } from 'recoil';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const APP_TITLE = "CleanHelp";
-  const APP_DESCRIPTION = "Transparencia y trazabilidad";
+  const APP_TITLE = 'CleanHelp';
+  const APP_DESCRIPTION = 'Transparencia y trazabilidad';
 
   return (
     <>

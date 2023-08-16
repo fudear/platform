@@ -1,13 +1,11 @@
-import useAlchemyTransactionsHistory from "@/hooks/useAlchemy.hook";
-import { TransactionType } from "@/models/transaction.model";
-import { incomingTransactionsState } from "@/states/incoming-transactions.atom";
-import { outgoingTransactionsState } from "@/states/outgoing-transactions.atom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { FC, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
+import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { FC } from 'react';
+import { useRecoilState } from 'recoil';
 
 const Home: FC<{}> = () => {
   const [incomingTxState, setIncomingTxState] = useRecoilState(
@@ -16,20 +14,6 @@ const Home: FC<{}> = () => {
   const [outgoingTxState, setOutgoingTxState] = useRecoilState(
     outgoingTransactionsState
   );
-
-  const outgoingTxFn = useAlchemyTransactionsHistory(
-    setOutgoingTxState,
-    TransactionType.Outgoing
-  );
-  const incomingTxFn = useAlchemyTransactionsHistory(
-    setIncomingTxState,
-    TransactionType.Incoming
-  );
-
-  useEffect(() => {
-    incomingTxFn();
-    outgoingTxFn();
-  }, []);
 
   return (
     <Typography variant="h3">
