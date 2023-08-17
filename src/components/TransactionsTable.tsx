@@ -1,4 +1,7 @@
-import { TransactionType } from '@/models/transaction.model';
+import {
+  DefiArgentinaWallets,
+  TransactionType,
+} from '@/models/transaction.model';
 import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
 import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
 import {
@@ -19,6 +22,12 @@ import { useRecoilState } from 'recoil';
 interface TransactionsTableProps {
   transactionType: TransactionType;
 }
+
+const formatAddress = (address: string): string => {
+  return DefiArgentinaWallets.includes(address)
+    ? 'DeFi Argentina'
+    : `${address.substring(0, 10)}...`;
+};
 
 const TransactionsTable: React.FC<TransactionsTableProps> = ({
   transactionType,
@@ -52,8 +61,16 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
               : outgoingTxState
             ).map((row, index) => (
               <StyledTableRow key={index}>
-                <StyledTableCell>{row.asset || ''}</StyledTableCell>
-                <StyledTableCell>${row.value || 0}</StyledTableCell>
+                <StyledTableCell>
+                  <Typography fontWeight={700}>{row.asset || ''}</Typography>
+                  <Typography color="secondary">Ether</Typography>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <Typography fontWeight={700}>$100</Typography>
+                  <Typography>
+                    {row.value || 0} {row.asset}
+                  </Typography>
+                </StyledTableCell>
                 <StyledTableCell>
                   <Typography
                     color={
@@ -67,8 +84,8 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                       : 'Cashout'}
                   </Typography>
                 </StyledTableCell>
-                <StyledTableCell>{row.from.substring(0, 7)}...</StyledTableCell>
-                <StyledTableCell>{row.to?.substring(0, 7)}...</StyledTableCell>
+                <StyledTableCell>{formatAddress(row.from)}</StyledTableCell>
+                <StyledTableCell>{formatAddress(row.to || '')}</StyledTableCell>
                 <StyledTableCell>17/08/2023 10:56</StyledTableCell>
                 <StyledTableCell>
                   {row.network === Network.MATIC_MAINNET ? (
@@ -102,7 +119,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.secondary.light,
     color: theme.palette.secondary.main,
-    fontSize: theme.typography.h4.fontSize,
+    fontSize: 14,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
