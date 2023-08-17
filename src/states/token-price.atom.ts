@@ -9,5 +9,6 @@ export const tokensPricesState = atom({
         matic:'',
         eth:'',
         usdc:'',
+        dai: ''
     },
 })

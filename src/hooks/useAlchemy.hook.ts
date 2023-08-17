@@ -72,7 +72,7 @@ const getAssetTransfers = (
       setTxHistory((current) => [
         ...current,
         ...res.transfers
-          .filter((tx) => ['USDC', 'USDT', 'MATIC'].includes(tx.asset || ''))
+          .filter((tx) => ['USDC', 'USDT', 'MATIC','DAI'].includes(tx.asset || ''))
           .map((tx) => ({ ...tx, network: network })),
       ]);
     });
