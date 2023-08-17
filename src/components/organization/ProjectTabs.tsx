@@ -1,4 +1,4 @@
-import { Tabs, Tab, Typography } from '@mui/material';
+import { Tabs, Tab, Typography, Grid } from '@mui/material';
 import { FC, useState } from 'react';
 import ProjectCard from './ProjectCard';
 
@@ -18,11 +18,31 @@ const ProjectTabs: FC<{}> = () => {
       </Tabs>
 
       {selectedTab === 0 && (
-        <>
-          <ProjectCard />
-        </>
+        <Grid container spacing={3} marginY={4} sx={{ marginX: 4 }}>
+          <Grid xs>
+            <ProjectCard />
+          </Grid>
+          <Grid xs>
+            <ProjectCard />
+          </Grid>
+        </Grid>
       )}
-      {selectedTab === 1 && <Typography>OrganizationCards</Typography>}
+      {selectedTab === 1 && (
+        <Grid container spacing={3} sx={{ marginX: 4 }}>
+          <Grid xs={6}>
+            <ProjectCard />
+          </Grid>
+          <Grid xs={6}>
+            <ProjectCard />
+          </Grid>
+          <Grid xs={6}>
+            <ProjectCard />
+          </Grid>
+          <Grid xs={6}>
+            <ProjectCard />
+          </Grid>
+        </Grid>
+      )}
     </>
   );
 };
