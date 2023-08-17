@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 const ProjectCard: FC<{}> = () => {
   return (
-    <Paper elevation={2} sx={{ maxWidth: '25rem' }}>
+    <Paper elevation={2} sx={{ width: '25rem', minWidth: '25rem' }}>
       <Image
         src="/test-project-card.png"
         alt="Project card"

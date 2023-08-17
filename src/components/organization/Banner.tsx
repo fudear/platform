@@ -4,7 +4,7 @@ import { FC } from 'react';
 const Banner: FC<{}> = () => {
   return (
     <Image
-      src="/defi-arg-banner.png"
+      src="/defi-argentina-banner.png"
       alt="DeFi Argentina Banner"
       width={1500}
       height={1500}
