@@ -4,8 +4,12 @@ import {
 } from '@/models/transaction.model';
 import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
 import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
-import { Launch } from '@mui/icons-material';
+import Launch from '@mui/icons-material/Launch';
+import AttachFile from '@mui/icons-material/AttachFile';
 import {
+  Box,
+  Modal,
+  Stack,
   TableCell,
   TableRow,
   Typography,
@@ -19,6 +23,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import { Network } from 'alchemy-sdk';
 import { useRecoilState } from 'recoil';
+import { useState } from 'react';
+import ImageForm from './ImageForm';
 
 interface TransactionsTableProps {
   transactionType: TransactionType;
@@ -33,6 +39,9 @@ const formatAddress = (address: string): string => {
 const TransactionsTable: React.FC<TransactionsTableProps> = ({
   transactionType,
 }) => {
+  const [imageModalOpened, setImageModalOpened] = useState(false);
+  const [selectedTx, setSelectedTx] = useState('');
+
   const [incomingTxState, setIncomingTxState] = useRecoilState(
     incomingTransactionsState
   );
@@ -89,29 +98,55 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 <StyledTableCell>{formatAddress(row.to || '')}</StyledTableCell>
                 <StyledTableCell>17/08/2023 10:56</StyledTableCell>
                 <StyledTableCell>
-                  {row.network === Network.MATIC_MAINNET ? (
-                    <a
-                      href={`https://polygonscan.com/tx/${row.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Launch />
-                    </a>
-                  ) : (
-                    <a
-                      href={`https://etherscan.io/tx/${row.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Launch />
-                    </a>
-                  )}
+                  <Stack direction="row" gap={4}>
+                    <Box>
+                      {row.network === Network.MATIC_MAINNET ? (
+                        <a
+                          href={`https://polygonscan.com/tx/${row.hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Launch />
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://etherscan.io/tx/${row.hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Launch />
+                        </a>
+                      )}
+                    </Box>
+
+                    <AttachFile
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setImageModalOpened(true);
+                        setSelectedTx(row.hash || '');
+                      }}
+                    />
+                  </Stack>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Modal
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        open={imageModalOpened}
+        onClose={() => setImageModalOpened(false)}
+      >
+        <Paper sx={{ width: 'fit-content', padding: 6 }}>
+          <Typography variant="h5" fontWeight={800} paddingBottom={4}>
+            Upload withdrawl receipts
+          </Typography>
+
+          <ImageForm txHash={selectedTx} />
+        </Paper>
+      </Modal>
     </>
   );
 };

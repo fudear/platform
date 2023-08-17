@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Box } from '@mui/material';
+import { TextField, Button, Container, Box, Typography } from '@mui/material';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { firebaseStorage as getStorage } from '../services/firebase/firebase.config'; // Ajusta la ruta según tu estructura
 
-interface CheckoutFormProps {}
+interface CheckoutFormProps {
+  txHash?: string;
+}
 
-const ImageForm: React.FC<CheckoutFormProps> = () => {
+const ImageForm: React.FC<CheckoutFormProps> = ({ txHash }) => {
   const [formData, setFormData] = useState({
-    hash: '',
+    hash: txHash || '',
     descripcion: '',
     imagen: null as File | null,
   });
@@ -65,7 +67,7 @@ const ImageForm: React.FC<CheckoutFormProps> = () => {
             required
           />
         </Box>
-        <Box mt={2}>
+        <Box mt={4}>
           <input
             type="file"
             accept="image/*"
@@ -73,8 +75,14 @@ const ImageForm: React.FC<CheckoutFormProps> = () => {
             placeholder="Image"
           />
         </Box>
-        <Box mt={2}>
-          <Button type="submit" variant="contained" color="primary">
+        <Box mt={6}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ height: '2.5rem' }}
+          >
             Confirm Order
           </Button>
         </Box>
