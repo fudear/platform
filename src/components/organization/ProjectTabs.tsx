@@ -31,6 +31,9 @@ const ProjectTabs: FC<{}> = () => {
           <Grid>
             <ProjectCard />
           </Grid>
+          <Grid>
+            <ProjectCard />
+          </Grid>
         </Grid>
       )}
       {selectedTab === 1 && (
