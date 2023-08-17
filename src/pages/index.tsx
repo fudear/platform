@@ -1,13 +1,21 @@
-import Home from '@/components/Home';
-import ImageForm from '@/components/ImageForm';
+import OrganizationCard from '@/components/organization/OrganizationCard';
+import OrganizationTransactions from '@/components/organization/OrganizationTransactions';
+import ProjectCampaigns from '@/components/organization/ProjectCampaigns';
+import Stack from '@mui/material/Stack';
 import { FC } from 'react';
 
-const HomePage: FC<{}> = () => {
+const OrganizationPage: FC<{}> = () => {
   return (
     <>
-      <Home />
+      <Stack gap={5}>
+        <OrganizationCard />
+
+        <ProjectCampaigns />
+
+        <OrganizationTransactions />
+      </Stack>
     </>
   );
 };
 
-export default HomePage;
+export default OrganizationPage;

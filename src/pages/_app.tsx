@@ -13,7 +13,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { arbitrum, mainnet, polygon } from 'wagmi/chains';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const APP_TITLE = 'CleanHelp';
+  const APP_TITLE = 'Truth Cycle';
   const APP_DESCRIPTION = 'Transparencia y trazabilidad';
 
   const chains = [arbitrum, mainnet, polygon];
