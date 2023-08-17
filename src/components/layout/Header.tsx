@@ -22,7 +22,7 @@ const Header = () => {
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Contribute
         </Typography>
-        <Button color="inherit" variant="text" onMouseEnter={() => console.log('aaa')}>
+        <Button color="inherit" variant="text">
           <AccountCircleIcon/>
         </Button>
         {isConnected && <Typography variant="h6">
