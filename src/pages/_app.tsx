@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import Root from '@/components/layout/Root';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -34,6 +35,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>{APP_TITLE}</title>
         <meta name="description" content={APP_DESCRIPTION} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <RecoilRoot>

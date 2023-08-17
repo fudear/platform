@@ -13,9 +13,11 @@ const OrganizationCard: FC<{}> = () => {
         alignItems="center"
         marginX={2}
       >
-        <Typography variant="displayLarge">DeFi Argentina</Typography>
+        <Typography variant="displaySmall" fontWeight={700}>
+          DeFi Argentina
+        </Typography>
         <Button variant="contained" sx={{ paddingY: 2 }}>
-          Donate
+          <Typography textAlign="center">Donate</Typography>
         </Button>
       </Stack>
 

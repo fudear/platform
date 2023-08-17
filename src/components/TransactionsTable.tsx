@@ -55,9 +55,17 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 <StyledTableCell>{row.asset || ''}</StyledTableCell>
                 <StyledTableCell>${row.value || 0}</StyledTableCell>
                 <StyledTableCell>
-                  {transactionType === TransactionType.Incoming
-                    ? 'Donation'
-                    : 'Cashout'}
+                  <Typography
+                    color={
+                      transactionType === TransactionType.Incoming
+                        ? '#008053'
+                        : '#d32f2f'
+                    }
+                  >
+                    {transactionType === TransactionType.Incoming
+                      ? 'Donation'
+                      : 'Cashout'}
+                  </Typography>
                 </StyledTableCell>
                 <StyledTableCell>{row.from.substring(0, 7)}...</StyledTableCell>
                 <StyledTableCell>{row.to?.substring(0, 7)}...</StyledTableCell>
