@@ -28,21 +28,24 @@ const useAlchemyTransactionsHistory = (
       setTxHistory,
       transactionType,
       polygonAlchemy,
-      polygonAddress1
+      polygonAddress1,
+      Network.MATIC_MAINNET
     );
 
     getAssetTransfers(
       setTxHistory,
       transactionType,
       polygonAlchemy,
-      polygonAddress2
+      polygonAddress2,
+      Network.MATIC_MAINNET
     );
 
     getAssetTransfers(
       setTxHistory,
       transactionType,
       etehereumAlchemy,
-      etehereumAddress
+      etehereumAddress,
+      Network.ETH_MAINNET
     );
   };
 };
@@ -51,7 +54,8 @@ const getAssetTransfers = (
   setTxHistory: SetterOrUpdater<CustomTransaction[]>,
   transactionType: TransactionType,
   alchemyInstance: Alchemy,
-  address: string
+  address: string,
+  network: Network
 ) => {
   alchemyInstance.core
     .getAssetTransfers({
@@ -69,7 +73,7 @@ const getAssetTransfers = (
         ...current,
         ...res.transfers.filter((tx) =>
           ["USDC", "USDT", "MATIC"].includes(tx.asset || "")
-        ),
+        ).map((tx) => ({  ...tx, network: network })),
       ]);
     });
 };

@@ -1,6 +1,5 @@
-import Home from "@/components/Home";
-import TransactionHistory from "@/components/TransactionHistory";
-import { FC } from "react";
+import Home from '@/components/Home';
+import { FC } from 'react';
 
 const HomePage: FC<{}> = () => {
   return <Home />;
