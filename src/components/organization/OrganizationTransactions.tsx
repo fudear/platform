@@ -1,5 +1,7 @@
 import { Tabs, Tab, Typography } from '@mui/material';
 import { FC, useState } from 'react';
+import TransactionsTable from '../TransactionsTable';
+import { TransactionType } from '@/models/transaction.model';
 
 const OrganizationTransactions: FC<{}> = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -18,8 +20,12 @@ const OrganizationTransactions: FC<{}> = () => {
           <Tab label="Cashouts" sx={{ flex: 1 }} />
         </Tabs>
 
-        {selectedTab === 0 && <Typography>Incoming Transactions</Typography>}
-        {selectedTab === 1 && <Typography>Outgoing Transactions</Typography>}
+        {selectedTab === 0 && (
+          <TransactionsTable transactionType={TransactionType.Incoming} />
+        )}
+        {selectedTab === 1 && (
+          <TransactionsTable transactionType={TransactionType.Outgoing} />
+        )}
       </>
     </>
   );

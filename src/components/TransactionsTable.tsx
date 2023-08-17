@@ -1,3 +1,4 @@
+import { TransactionType } from '@/models/transaction.model';
 import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
 import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
 import {
@@ -15,9 +16,13 @@ import TableHead from '@mui/material/TableHead';
 import { Network } from 'alchemy-sdk';
 import { useRecoilState } from 'recoil';
 
-interface TransactionsTableProps {}
+interface TransactionsTableProps {
+  transactionType: TransactionType;
+}
 
-const TransactionsTable: React.FC<TransactionsTableProps> = () => {
+const TransactionsTable: React.FC<TransactionsTableProps> = ({
+  transactionType,
+}) => {
   const [incomingTxState, setIncomingTxState] = useRecoilState(
     incomingTransactionsState
   );
@@ -29,77 +34,34 @@ const TransactionsTable: React.FC<TransactionsTableProps> = () => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Typography variant="h2" p="2rem" textAlign="center">
-          Incoming Transactions
-        </Typography>
         <Table>
           <TableHead>
             <StyledTableRow>
               <StyledTableCell>Token</StyledTableCell>
               <StyledTableCell>Amount</StyledTableCell>
-              <StyledTableCell>Address</StyledTableCell>
-              <StyledTableCell>Transaction Hash</StyledTableCell>
               <StyledTableCell>Category</StyledTableCell>
+              <StyledTableCell>From</StyledTableCell>
+              <StyledTableCell>To</StyledTableCell>
+              <StyledTableCell>TimeStamp</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
-            {incomingTxState.map((row, index) => (
+            {(transactionType === TransactionType.Incoming
+              ? incomingTxState
+              : outgoingTxState
+            ).map((row, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell>{row.asset || ''}</StyledTableCell>
                 <StyledTableCell>${row.value || 0}</StyledTableCell>
-                <StyledTableCell>{row.from}</StyledTableCell>
-                <StyledTableCell>{row.hash || ''}</StyledTableCell>
-                <StyledTableCell>{row.category}</StyledTableCell>
                 <StyledTableCell>
-                  {row.network === Network.MATIC_MAINNET ? (
-                    <a
-                      href={`https://polygonscan.com/tx/${row.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View more TX details
-                    </a>
-                  ) : (
-                    <a
-                      href={`https://etherscan.io/tx/${row.hash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View more TX details
-                    </a>
-                  )}
+                  {transactionType === TransactionType.Incoming
+                    ? 'Donation'
+                    : 'Cashout'}
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer component={Paper}>
-        <Typography variant="h2" p="2rem" textAlign="center">
-          Outgoing Transactions
-        </Typography>
-        <Table>
-          <TableHead>
-            <StyledTableRow>
-              <StyledTableCell>Token</StyledTableCell>
-              <StyledTableCell>Amount</StyledTableCell>
-              <StyledTableCell>Address</StyledTableCell>
-              <StyledTableCell>Transaction Hash</StyledTableCell>
-              <StyledTableCell>Category</StyledTableCell>
-              <StyledTableCell>Action</StyledTableCell>
-            </StyledTableRow>
-          </TableHead>
-          <TableBody>
-            {outgoingTxState.map((row, index) => (
-              <StyledTableRow key={index}>
-                <StyledTableCell>{row.asset || ''}</StyledTableCell>
-                <StyledTableCell>
-                  <div className="flex">${row.value || 0}</div>
-                </StyledTableCell>
-                <StyledTableCell>{row.from}</StyledTableCell>
-                <StyledTableCell>{row.hash || ''}</StyledTableCell>
-                <StyledTableCell>{row.category}</StyledTableCell>
+                <StyledTableCell>{row.from.substring(0, 7)}...</StyledTableCell>
+                <StyledTableCell>{row.to?.substring(0, 7)}...</StyledTableCell>
+                <StyledTableCell>17/08/2023 10:56</StyledTableCell>
                 <StyledTableCell>
                   {row.network === Network.MATIC_MAINNET ? (
                     <a
