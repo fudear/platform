@@ -10,7 +10,7 @@ const ProjectTabs: FC<{}> = () => {
       <Tabs
         value={selectedTab}
         onChange={(_, newValue) => setSelectedTab(newValue)}
-        sx={{ justifyContent: 'center' }}
+        sx={{ justifyContent: 'center', marginBottom: 5 }}
         variant="fullWidth"
       >
         <Tab label="Campaign" sx={{ flex: 1 }} />
@@ -18,27 +18,36 @@ const ProjectTabs: FC<{}> = () => {
       </Tabs>
 
       {selectedTab === 0 && (
-        <Grid container spacing={3} marginY={4} sx={{ marginX: 4 }}>
-          <Grid xs>
+        <Grid
+          container
+          spacing={3}
+          marginY={4}
+          sx={{ marginX: 4 }}
+          justifyContent="space-evenly"
+        >
+          <Grid>
             <ProjectCard />
           </Grid>
-          <Grid xs>
+          <Grid>
             <ProjectCard />
           </Grid>
         </Grid>
       )}
       {selectedTab === 1 && (
-        <Grid container spacing={3} sx={{ marginX: 4 }}>
-          <Grid xs={6}>
+        <Grid
+          container
+          spacing={3}
+          marginY={4}
+          sx={{ marginX: 4 }}
+          justifyContent="space-evenly"
+        >
+          <Grid>
             <ProjectCard />
           </Grid>
-          <Grid xs={6}>
+          <Grid>
             <ProjectCard />
           </Grid>
-          <Grid xs={6}>
-            <ProjectCard />
-          </Grid>
-          <Grid xs={6}>
+          <Grid>
             <ProjectCard />
           </Grid>
         </Grid>
