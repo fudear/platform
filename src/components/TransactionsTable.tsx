@@ -4,6 +4,7 @@ import {
 } from '@/models/transaction.model';
 import { incomingTransactionsState } from '@/states/incoming-transactions.atom';
 import { outgoingTransactionsState } from '@/states/outgoing-transactions.atom';
+import { Launch } from '@mui/icons-material';
 import {
   TableCell,
   TableRow,
@@ -94,7 +95,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      View more TX details
+                      <Launch />
                     </a>
                   ) : (
                     <a
@@ -102,7 +103,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      View more TX details
+                      <Launch />
                     </a>
                   )}
                 </StyledTableCell>
