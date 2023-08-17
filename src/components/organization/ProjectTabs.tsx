@@ -1,5 +1,6 @@
 import { Tabs, Tab, Typography } from '@mui/material';
 import { FC, useState } from 'react';
+import ProjectCard from './ProjectCard';
 
 const ProjectTabs: FC<{}> = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -16,7 +17,11 @@ const ProjectTabs: FC<{}> = () => {
         <Tab label="Organization" sx={{ flex: 1 }} />
       </Tabs>
 
-      {selectedTab === 0 && <Typography>CampaignCards</Typography>}
+      {selectedTab === 0 && (
+        <>
+          <ProjectCard />
+        </>
+      )}
       {selectedTab === 1 && <Typography>OrganizationCards</Typography>}
     </>
   );
