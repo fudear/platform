@@ -5,48 +5,48 @@ use std::storage::storage_vec::*;
 use string::String;
 
 pub struct OffChainActionNFT {
-    image_link: String,
-    description: String,
-    transaction_hash: String,
+    image_link: str[256],
+    description: str[256],
+    transaction_hash: str[256],
 }
 
 
 abi NFT {
     #[storage(read, write)]
-    fn mint(image_link: String, transaction_hash: String, description: String);
+    fn mint(image_link: str[256], transaction_hash: str[256], description: str[256]);
 
     #[storage(read)]
-    fn get_tx_nfts(transactionHash: String) -> StorageVector<OffChainActionNFT>;
+    fn get_tx_nfts(transaction_hash: str[256]) -> StorageVec<OffChainActionNFT>;
 }
 
 storage {
-    transactionsOffchainActions: StorageMap<String, StorageVector<OffChainActionNFT>> = StorageMap {}
+    transactionsOffchainActions: StorageMap<str[256], StorageVec<OffChainActionNFT>> = StorageMap {}
 }
 
 impl NFT for Contract {
     #[storage(read, write)]
-    fn mint(imageLink: String, transactionHash: String, description: String) {
-        if storage.transactionsOffchainActions.get(TransactionHash).try_read().is_none() {
-            let v: StorageVector<OffChainActionNFT> = StorageVector {};
+    fn mint(imageLink: str[256], transaction_hash: str[256], description: str[256]) {
+        if storage.transactionsOffchainActions.get(transaction_hash).try_read().is_none() {
+            let v: StorageVec<OffChainActionNFT> = StorageVec {};
             
             v.insert(OffChainActionNFT {
                 imageLink: imageLink,
                 description: description,
-                transactionHash: transactionHash
+                transaction_hash: transaction_hash
             });
 
-            storage.transactionsOffchainActions.insert(transactionHash, v);
+            storage.transactionsOffchainActions.insert(transaction_hash, v);
         } else {
-            storage.transactionsOffchainActions.get(transactionHash).push(OffChainActionNFT {
+            storage.transactionsOffchainActions.get(transaction_hash).push(OffChainActionNFT {
                 imageLink: imageLink,
                 description: description,
-                transactionHash: transactionHash
+                transaction_hash: transaction_hash
             })
         }
     }
 
     #[storage(read)]
-    fn get_tx_nfts(transactionHash: String) -> StorageVector<OffChainActionNFT> {
-        storage.transactionsOffchainActions.get(transactionHash)
+    fn get_tx_nfts(transaction_hash: str[256]) -> StorageVec<OffChainActionNFT> {
+        storage.transactionsOffchainActions.get(transaction_hash)
     }
 }
