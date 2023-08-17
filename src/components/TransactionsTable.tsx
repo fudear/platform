@@ -144,7 +144,10 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
             Upload withdrawl receipts
           </Typography>
 
-          <ImageForm txHash={selectedTx} />
+          <ImageForm
+            txHash={selectedTx}
+            onSuccess={() => setImageModalOpened(false)}
+          />
         </Paper>
       </Modal>
     </>

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Box, Typography } from '@mui/material';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { firebaseStorage as getStorage } from '../services/firebase/firebase.config'; // Ajusta la ruta según tu estructura
+import { firebaseStorage as getStorage } from '../services/firebase/firebase.config';
+import Swal from 'sweetalert2';
 
 interface CheckoutFormProps {
   txHash?: string;
+  onSuccess: () => void;
 }
 
-const ImageForm: React.FC<CheckoutFormProps> = ({ txHash }) => {
+const ImageForm: React.FC<CheckoutFormProps> = ({ txHash, onSuccess }) => {
   const [formData, setFormData] = useState({
     hash: txHash || '',
     descripcion: '',
@@ -39,9 +41,15 @@ const ImageForm: React.FC<CheckoutFormProps> = ({ txHash }) => {
       await uploadBytes(imageRef, formData.imagen);
       imageUrl = await getDownloadURL(imageRef);
       console.log('URL de la imagen:', imageUrl);
-    }
 
-    console.log('Datos del formulario guardados en Firestore y Storage');
+      Swal.fire({
+        title: 'Success!',
+        text: `Receipts uploaded correctly \nURL: ${imageUrl}`,
+        icon: 'success',
+      });
+
+      onSuccess();
+    }
   };
 
   return (
