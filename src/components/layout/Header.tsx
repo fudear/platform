@@ -1,21 +1,43 @@
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useWeb3Modal } from '@web3modal/react'
+import { useAccount } from 'wagmi'
+import { useBalance } from 'wagmi'
 
-const Header = () => (
-  <Box sx={{ flexGrow: 1, marginBottom: 5 }}>
+
+
+const Header = () => {
+  const { open } = useWeb3Modal()
+  const { address, isConnected } = useAccount()
+  const {data} = useBalance({
+    address: address
+  })
+
+  console.log(data)
+
+  return (
+    <Box sx={{ flexGrow: 1, marginBottom: 5 }}>
     <AppBar position="relative" color="transparent">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Contribute
         </Typography>
-        <Button color="inherit" variant="text">
-          Profile
+        <Button color="inherit" variant="text" onMouseEnter={() => console.log('aaa')}>
+          <AccountCircleIcon/>
         </Button>
-        <Button color="primary" variant="contained" sx={{ marginLeft: 2 }}>
-          Login
+        {isConnected && <Typography variant="h6">
+          {`${address?.slice(0,7)}...`}
+        </Typography>}
+        {
+          <Button color="primary" variant="contained" sx={{ marginLeft: 2 }} onClick={() =>open() }>
+          {isConnected ? 'Disconnect' : 'Login'}
         </Button>
+        }
       </Toolbar>
     </AppBar>
-  </Box>
-);
+  </Box>  
+)
+}
+
 
 export default Header;
