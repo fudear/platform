@@ -3,6 +3,7 @@ import { TextField, Button, Container, Box, Typography } from '@mui/material';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { firebaseStorage as getStorage } from '../services/firebase/firebase.config';
 import Swal from 'sweetalert2';
+import useSendNotification from '@/hooks/useSendNotification';
 
 interface CheckoutFormProps {
   txHash?: string;
@@ -15,6 +16,8 @@ const ImageForm: React.FC<CheckoutFormProps> = ({ txHash, onSuccess }) => {
     descripcion: '',
     imagen: null as File | null,
   });
+
+  const sendNotification = useSendNotification();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -47,6 +50,8 @@ const ImageForm: React.FC<CheckoutFormProps> = ({ txHash, onSuccess }) => {
         text: `Receipts uploaded correctly \nURL: ${imageUrl}`,
         icon: 'success',
       });
+
+      sendNotification().then((res) => console.log(res));
 
       onSuccess();
     }
