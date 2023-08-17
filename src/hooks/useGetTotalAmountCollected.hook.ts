@@ -11,8 +11,9 @@ const useGetTotalAmountCollected = (txArray:CustomTransaction[]) => {
     const totalAmount: number = txArray.reduce((accumulator, tx) => {
         if (tx.asset && curr.includes(tx.asset.toUpperCase()) && tx.value !== null) {
             const conversionRate = currenciesValues[tx.asset.toLowerCase()];
-            const total = accumulator + (tx.value * conversionRate);
-            console.log(total)
+            const total = accumulator + (tx.value.toFixed(2) * conversionRate);
+            console.log('value',tx.value)
+            console.log('acc',total)
             return total
         }
         return accumulator;

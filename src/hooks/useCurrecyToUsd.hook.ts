@@ -11,7 +11,8 @@ const useCurrecyToUsd = () => {
                 fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eth.json'),
                 fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/matic.json'),
                 fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usdc.json'),
-                fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usdt.json')
+                fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usdt.json'),
+                fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/dai.json')
             ]);
 
             const data = await Promise.all(responses.map(response => response.json()));
@@ -21,7 +22,8 @@ const useCurrecyToUsd = () => {
                 eth: data[0].eth.usd,
                 matic: data[1].matic.usd,
                 usdc: data[2].usdc.usd,
-                usdt: data[3].usdt.usd
+                usdt: data[3].usdt.usd,
+                dai: data[4].dai.usd
             });
         } catch (e) {
             console.error(e);
