@@ -10,6 +10,7 @@ import Header from './Header';
 import Layout from './Layout';
 import { Suspense, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import GlobalStyles from '@/styles/styles.global';
 
 interface RootProps {
   Component: any;
@@ -47,6 +48,8 @@ const Root: React.FC<RootProps> = ({
   }, []);
   return (
     <>
+      <GlobalStyles />
+
       <Header />
 
       <CacheProvider value={emotionCache}>
