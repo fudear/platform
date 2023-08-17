@@ -1,0 +1,21 @@
+[[package]]
+name = 'core'
+source = 'path+from-root-67732E1923984E25'
+
+[[package]]
+name = 'offchainActionNFT'
+source = 'member'
+dependencies = [
+    'std',
+    'string',
+]
+
+[[package]]
+name = 'std'
+source = 'git+https://github.com/fuellabs/sway?tag=v0.37.3#d09ef912828f5fc7193501ccf8a0d0fb0f36a821'
+dependencies = ['core']
+
+[[package]]
+name = 'string'
+source = 'git+https://github.com/FuelLabs/sway-libs?tag=v0.11.0#d470dc902489b215807b7207628d5ab30cff005e'
+dependencies = ['std']
