@@ -17,7 +17,7 @@ const OrganizationTransactions: FC<{}> = () => {
           variant="fullWidth"
         >
           <Tab label="Donations" sx={{ flex: 1 }} />
-          <Tab label="Cashouts" sx={{ flex: 1 }} />
+          <Tab label="Witdrawls" sx={{ flex: 1 }} />
         </Tabs>
 
         {selectedTab === 0 && (

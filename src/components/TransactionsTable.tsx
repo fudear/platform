@@ -82,7 +82,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                   >
                     {transactionType === TransactionType.Incoming
                       ? 'Donation'
-                      : 'Cashout'}
+                      : 'Withdrawl'}
                   </Typography>
                 </StyledTableCell>
                 <StyledTableCell>{formatAddress(row.from)}</StyledTableCell>
